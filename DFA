@@ -1,3 +1,5 @@
+//referensi: https://www.belajarcpp.com/artikel/penjelasan-dan-contoh-program-dfa-deterministic-finite-automaton-dengan-bahasa-c/
+
 #include<iostream>
 #include<string.h>
 using namespace std;
