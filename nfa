@@ -1,0 +1,87 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+ 
+int nfa = 0;
+   
+void State0jalur1(char c) 
+{ 
+    if ( c == '1' ) 
+        nfa = 1;
+    else
+        nfa = 0;   
+} 
+
+void State0jalur2(char c) 
+{ 
+    if ( c == '0' || c == '1' ) 
+        nfa = 1;  
+} 
+   
+void State1(char c) 
+{ 
+    if (c == '0' || c == '1' )
+        nfa = 1; 
+} 
+   
+int diterimasatu(char str[]) 
+{ 
+    int i, len = strlen(str); 
+   
+    for ( i=0; i < len; i++) { 
+            if (nfa == 0) 
+                State0jalur1(str[i]); 
+            else if (nfa == 1) 
+                State1(str[i]);  
+            else
+                return 0; 
+    } 
+    if(nfa == 1) 
+        return 1; 
+    else
+        return 0; 
+} 
+
+int diterimadua(char str[]) 
+{ 
+    int i, len = strlen(str); 
+   
+    for ( i=0; i < len; i++) { 
+            if (nfa == 0) 
+                State0jalur2(str[i]); 
+            else if (nfa == 1) 
+                State1(str[i]); 
+            else
+                return 0; 
+    } 
+    if(nfa == 1) 
+        return 1; 
+    else
+        return 0; 
+} 
+ 
+int main() 
+{ 
+    char str[10];  //maks string yang bisa masuk cuma 10
+    string jalur;
+    printf("Masukan bilangan biner: ");
+    fgets(str,10,stdin);
+    cout << "Masukkan jalur (1 dan 2)";
+    cin >> jalur;
+
+    if(jalur == "1") {
+        if (diterimasatu(str)) 
+            printf("\nDiterima\n"); 
+        else
+            printf("Ditolak\n"); 
+        return 0; 
+    }
+    if(jalur == "2") {
+        if (diterimadua(str)) 
+            printf("\nDiterima\n"); 
+        else
+            printf("Ditolak\n"); 
+        return 0; 
+        }
+
+} 
