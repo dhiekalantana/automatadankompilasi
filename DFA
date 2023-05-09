@@ -1,27 +1,24 @@
 //referensi: https://www.belajarcpp.com/artikel/penjelasan-dan-contoh-program-dfa-deterministic-finite-automaton-dengan-bahasa-c/
-
 #include<iostream>
 #include<string.h>
 using namespace std;
  
-int dfa = 0; //dfa di inisialisasi di state awal
-
-//dfa = 1 -> state 1/q1
-//dfa = 2 -> state 2/q2
+int dfa = 0; //inisialisasi state awal = dfa = 0 (q0)
    
 void State0(char c) 
 { 
     if ( c == '1' ) 
-        dfa = 1; //jika q0 diberikan 1 maka pindah ke q1 
-    else
+        dfa = 1;
+    
+    if ( c == '0' ) 
         dfa = 0;  
 } 
    
 void State1(char c) 
 { 
-    if (c == '0' ) 
+    if (c == '0') 
         dfa = 2; 
-    else
+    if (c == '1') 
         dfa = 0;
 } 
    
@@ -29,27 +26,25 @@ void State2(char c)
 { 
     if (c == '1' ) 
         dfa = 2;
-    else
+    if (c == '0' )
         dfa = 1;
 } 
    
-int diterima(char str[]) 
+int diterima(char str[])  //fungsi diterima
 { 
-    int i, len = strlen(str); 
+    int i, len = strlen(str);  //strlen = ngitung panjang masukan
    
     for ( i=0; i < len; i++) { 
-            if (dfa == 0) 
-                State0(str[i]); 
-   
+            if (dfa == 0)
+                State0(str[i]);
             else if (dfa == 1) 
                 State1(str[i]); 
-   
             else if (dfa == 2) 
                 State2(str[i]); 
-   
             else
                 return 0; 
     } 
+    //penetuan hasil
     if(dfa == 2) 
         return 1; 
     else
@@ -59,11 +54,13 @@ int diterima(char str[])
 int main() 
 { 
     char str[10];  //maks string yang bisa masuk cuma 10
-    printf("Masukan bilangan biner: ");
+    printf("Masukan bilangan biner: "); //print
     fgets(str,10,stdin);
-    if (diterima(str)) 
-        printf("\nDiterima\n"); 
+    
+    if (diterima(str)) //diterima(str) return 0
+        printf("\nDiterima\n");  //hanya akan di print kalau return 1
     else
-        printf("Ditolak\n"); 
-    return 0; 
+        printf("Ditolak\n"); //return 0
+        
+    return 0;
 } 
