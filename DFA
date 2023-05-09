@@ -57,7 +57,7 @@ int main()
     printf("Masukan bilangan biner: "); //print
     fgets(str,10,stdin);
     
-    if (diterima(str)) //diterima(str) return 0
+    if (diterima(str))
         printf("\nDiterima\n");  //hanya akan di print kalau return 1
     else
         printf("Ditolak\n"); //return 0
