@@ -1,0 +1,80 @@
+#include <iostream>
+#include <string>
+#include <map>
+using namespace std;
+
+
+class VendingMachine {
+public:
+    VendingMachine() {
+        state = "idle";
+        balance = 0;
+        items = {
+            {"1", {"Soda", 7000}},
+            {"2", {"Air Mineral", 5000}},
+            {"3", {"Keripik", 3000}}
+        };
+    }
+
+    void insertCoin(double amount) {
+        if (state == "idle") {
+            state = "coin_inserted";
+            balance += amount;
+            cout << "Uang dimasukkan. Saldo saat ini: $" << balance << endl;
+        } else {
+            cout << "Silakan selesaikan transaksi saat ini terlebih dahulu." << endl;
+        }
+    }
+
+    void selectItem(const string& itemCode) {
+        if (state == "coin_inserted") {
+            auto item = items.find(itemCode);
+            if (item != items.end()) {
+                if (balance >= item->second.price) {
+                    state = "item_dispensed";
+                    balance -= item->second.price;
+                    cout << "Item \"" << item->second.name << "\" keluar. Sisa saldo: $" << balance << endl;
+                } else {
+                    cout << "Saldo tidak mencukupi. Silakan masukkan lebih banyak Uang." << endl;
+                }
+            } else {
+                cout << "Kode item tidak valid." << endl;
+            }
+        } else {
+            cout << "Silakan masukkan uang terlebih dahulu." << endl;
+        }
+    }
+
+    void returnCoins() {
+        if (state == "coin_inserted") {
+            state = "idle";
+            cout << "Uang dikembalikan. Jumlah total: $" << balance << endl;
+            balance = 0;
+        } else {
+            cout << "Tidak ada uang yang dapat dikembalikan." << endl;
+        }
+    }
+
+private:
+    struct Item {
+        string name;
+        double price;
+    };
+
+    string state;
+    double balance;
+    map<string, Item> items;
+};
+
+int main() {
+    VendingMachine vendingMachine;
+
+    vendingMachine.insertCoin(10000);  // Masukkan Rp 1000
+    vendingMachine.selectItem("2");  // Pilih item dengan kode "2" (Air Mineral)
+    
+    VendingMachine vendingMachine2;
+    vendingMachine2.insertCoin(10000);
+    vendingMachine2.returnCoins();
+    
+    return 0;
+}
